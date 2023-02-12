@@ -4,5 +4,5 @@ pandas
 scipy
 numpy
 scikit-learn
-py2neo
 neo4j
+#py2neo
