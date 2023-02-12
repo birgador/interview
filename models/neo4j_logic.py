@@ -14,7 +14,15 @@ class Api:
     def close(self):
         self.driver.close()
 
+    
+    # We need to project the graph to the Graph Catalog in order to run functions from gds
+
     def project_graph(self):
+
+        # We check if the graph myGraph exists in Data Catalog, if not we run the query to create it
+        # query exports all available labels (the clusters), their relationship and the properties of the relationship. 
+        # Algorithms take direction into account, therefore we use UNDIRECTED
+
         if not self.check_graph_exists():
             print(f'Projecting graph...')
             query = f'''
@@ -32,6 +40,8 @@ class Api:
         else:
             print(f'Graph already exists')
 
+        # Check if graph exists in Data Catalog
+
     def check_graph_exists(self,graph='myGraph'):
         query = f'''
             CALL gds.graph.exists("{graph}")
@@ -44,6 +54,7 @@ class Api:
             return exists
             
         
+        # All static methods execute the query for the session.
 
     @staticmethod
     def _get_top_nodes(transaction, n: int, cluster: str):
@@ -54,9 +65,8 @@ class Api:
         ORDER BY node.membershipScore DESC
         LIMIT {n}
         '''
-        results = transaction.run(query)
         try:
-            #return [{"node":record[]}]
+            results = transaction.run(query)
             return [{'JobId':record['node']['JobId'],'membershipScore':record['node']['membershipScore']} for record in results]
         except ServiceUnavailable as exception:
             logging.error(f'{query} raised an error:\n {exception}')
@@ -94,10 +104,9 @@ class Api:
             nodes(path)
         ORDER BY index
         '''
-        results = transaction.run(query)
+        
         try:
-            #[node['properties'] for node in record['path']]
-            #return [{'costs':record['costs'],'path':[node['JobId'] for node in record['path']]} for record in results ]
+            results = transaction.run(query)
             return [ [{'JobId':node['JobId'],'membershipScore':node['membershipScore']} for node in record[f'nodes(path)']] for record in results]
         except ServiceUnavailable as exception:
             logging.error(f'{query} raised an error:\n {exception}')
@@ -115,6 +124,10 @@ class Api:
     @staticmethod
     def _get_shortest_path_by_numnodes(transaction, jobId1: str, jobId2: str):
 
+        '''
+        The commented out query also works, as it uses Breadth first to find the shortest path
+        However, the shortestPath query is simpler
+        '''
         # query = f'''
         # MATCH (source), (target)
         # WHERE source.JobId="{jobId1}" AND target.JobId="{jobId2}"
@@ -133,8 +146,9 @@ class Api:
         MATCH path = shortestPath((source)-[*]-(target))
         RETURN path,nodes(path)
         '''
-        results = transaction.run(query)
+        
         try:
+            results = transaction.run(query)
             return [ [{'JobId':node['JobId'],'membershipScore':node['membershipScore']} for node in record[f'nodes(path)']] for record in results]
         except ServiceUnavailable as exception:
             logging.error(f'{query} raised an error:\n {exception}')
