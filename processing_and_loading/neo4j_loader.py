@@ -12,7 +12,7 @@ def run_transaction(transaction, queries) -> None:
 def load_df_into_db_batch(df:pd.DataFrame, batch_size= 5000):
 
     # Initialise driver
-    driver =  GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "your_password"))
+    driver =  GraphDatabase.driver("bolt://database:7687", auth=("neo4j", "your_password"))
 
     batch = []
 

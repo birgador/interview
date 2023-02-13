@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from db_logic.neo4j_logic import Api
-import processing_and_loading.run_data_processing
+from processing_and_loading.run_data_processing import DataProcessor
 
 
 app = Flask(__name__)
@@ -34,6 +34,7 @@ def get_shortest_path_numnodes():
     
     return jsonify(nodes)
 
+DataProcessor().process_data()
 Api().project_graph()
 if __name__=='__main__':
     app.run()

@@ -8,7 +8,7 @@ from neo4j.exceptions import ServiceUnavailable
 class Api:
 
     def __init__(self) -> None:
-        self.driver =  GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "your_password"))
+        self.driver =  GraphDatabase.driver("bolt://database:7687", auth=("neo4j", "your_password"))
 
 
     def close(self):

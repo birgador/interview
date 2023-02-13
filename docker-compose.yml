@@ -1,13 +1,4 @@
 services:
-  app:
-    build:
-      context: ./
-      dockerfile: ./Dockerfile
-    ports:
-      - "5000:5000"
-
-
-
   database:
     image: neo4j:5.4.0
     ports:
@@ -18,4 +9,9 @@ services:
       NEO4J_AUTH: neo4j/your_password
     restart: always
 
-    
+  app:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    ports:
+      - "5000:5000"
