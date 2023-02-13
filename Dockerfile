@@ -16,4 +16,4 @@ RUN ls -a
 
 # RUN wget http://dropbox.jobtome.com/data/samples/job_graph_matrix.csv
 
-CMD [ "flask", "run", "--host=0.0.0.0"]
+CMD [ "flask", "run", "--no-reload","--host=0.0.0.0"]

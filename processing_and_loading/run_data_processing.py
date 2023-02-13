@@ -50,7 +50,7 @@ class DataProcessor:
         # Load dataframe into db in batches (default 5000)
         load_df_into_db_batch(processed_df)
         print('Data loaded!')
-
+        del processed_df    # Free up space
 
 
 if __name__ == '__main__':
