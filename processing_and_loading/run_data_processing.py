@@ -1,7 +1,7 @@
 import argparse
 import pandas as pd
-from processing_and_loading.data_processing import load_data, assign_cluster, calculate_self_similarity_matrix, get_membership_score, get_similarities_from_matrix, get_relation_pairs
-from processing_and_loading.neo4j_loader import load_csv_into_db, load_df_into_db_batch
+from data_processing import load_data, assign_cluster, calculate_self_similarity_matrix, get_membership_score, get_similarities_from_matrix, get_relation_pairs
+from neo4j_loader import load_df_into_db_batch
 
 
 if __name__ == '__main__':

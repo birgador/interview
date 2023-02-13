@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from db_logic.neo4j_logic import Api
+import processing_and_loading.run_data_processing
 
 
 app = Flask(__name__)

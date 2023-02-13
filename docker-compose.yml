@@ -1,14 +1,21 @@
 services:
   app:
     build:
-      context: app
-      target: builder
+      context: ./
+      dockerfile: ./Dockerfile
     ports:
       - "5000:5000"
+
+
 
   database:
     image: neo4j:5.4.0
     ports:
       - "7474:7474" 
       - "7687:7687"
+    environment:
+      NEO4JLABS_PLUGINS: '["graph-data-science"]'
+      NEO4J_AUTH: neo4j/your_password
+    restart: always
+
     
