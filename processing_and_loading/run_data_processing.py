@@ -5,11 +5,23 @@ from processing_and_loading.neo4j_loader import load_df_into_db_batch, check_db_
 from db_logic.neo4j_logic import Api
 
 class DataProcessor:
+    """
+    A class to process the data and upload it to the database
+    
 
+    Methods
+    -------
+
+    process_data
+        Processes and loads data to db
+    """
     def __init__(self) -> None:
         pass
 
     def process_data(self):
+        """
+        Processes and loads data to db
+        """
         # Check db is online before proceeding. I couldn't find a way to prevent queries from retrying, so the retry here seems to not make sense 
         # It makes sense for the first time this is run
         db_online = False

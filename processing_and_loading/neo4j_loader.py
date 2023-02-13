@@ -6,10 +6,31 @@ URI = 'bolt://database:7687'
 auth = ("neo4j", "your_password")
 # Execute transaction
 def run_batch_transaction(transaction, queries) -> None:
+    """Executes a batch of queries in a transaction 
+
+    Parameters
+    ----------
+    transaction : Transaction
+        The transaction to be excuted
+    queries : list
+        A list of strings that contain each query
+
+    """
     for query in queries:
         transaction.run(query)
 
-def run_transaction(transaction, query):
+def run_transaction(transaction, query) -> None:
+    """Executes a single query in a transaction 
+
+    Parameters
+    ----------
+    transaction : Transaction
+        The transaction to be excuted
+    query : string
+        A string with the query
+
+    """
+
     result = transaction.run(query)
     
     
@@ -18,6 +39,15 @@ def run_transaction(transaction, query):
 
 # Load data into db
 def load_df_into_db_batch(df:pd.DataFrame, batch_size= 5000):
+    """ Loads a dataframe into the database in batches 
+
+    Parameters
+    ----------
+    df : Dataframe
+        The dataframe to be loaded
+    batch_size : int, optional
+        An int representing the number of transactions in a batch
+    """
 
     # Initialise driver
     driver =  GraphDatabase.driver(URI, auth=auth)
@@ -55,6 +85,10 @@ def load_df_into_db_batch(df:pd.DataFrame, batch_size= 5000):
 
 # Check if database is online before running script
 def check_db_online():
+
+    """ Checks if database is online 
+    """
+        # we query for any node and return a single node
     query = f'''
         MATCH () RETURN 1 LIMIT 1
     '''
@@ -71,6 +105,14 @@ def check_db_online():
 
 
 def check_data_in_db():
+    """ Checks if in the database there is already the data that the script loads 
+
+    Returns
+    -------
+
+    int
+        The number of nodes that the script loads into the db
+    """
     query = f'''
         MATCH (n) RETURN count(n)
     '''
