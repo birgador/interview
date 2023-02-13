@@ -122,7 +122,7 @@ class Api:
     # By number of nodes
 
     @staticmethod
-    def _get_shortest_path_by_numnodes(transaction, jobId1: str, jobId2: str):
+    def _get_shortest_path_by_num_nodes(transaction, jobId1: str, jobId2: str):
 
         '''
         The commented out query also works, as it uses Breadth first to find the shortest path
@@ -155,7 +155,7 @@ class Api:
             raise
 
         
-    def get_shortest_path_by_numnodes(self, jobId1: str, jobId2: str):
+    def get_shortest_path_by_num_nodes(self, jobId1: str, jobId2: str):
         with self.driver.session() as session:
-            results = session.execute_read(self._get_shortest_path_by_numnodes,jobId1,jobId2)
+            results = session.execute_read(self._get_shortest_path_by_num_nodes,jobId1,jobId2)
             return results
