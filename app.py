@@ -7,8 +7,8 @@ from processing_and_loading.run_data_processing import DataProcessor
 app = Flask(__name__)
 
 @app.route("/")
-def hello_world():
-    return "Hello, World!"
+def landing():
+    return f"Welcome! You can find the api documentation in the documentation folder"
 
 @app.route("/api/top_n", methods=['GET'])
 def get_top_n():
